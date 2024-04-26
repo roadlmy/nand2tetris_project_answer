@@ -1,0 +1,1380 @@
+<class>
+  <keyword>class</keyword>
+  <identifier>Memory</identifier>
+  <symbol>{</symbol>
+<classVarDec>
+  <keyword>static</keyword>
+  <identifier>Array</identifier>
+  <identifier>memory</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <identifier>Array</identifier>
+  <identifier>freeList</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <identifier>Array</identifier>
+  <identifier>memoryBottom</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <keyword>int</keyword>
+  <identifier>heapBottom</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <keyword>int</keyword>
+  <identifier>heapBase</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <keyword>int</keyword>
+  <identifier>LENGTH</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <keyword>int</keyword>
+  <identifier>NEXT</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<classVarDec>
+  <keyword>static</keyword>
+  <keyword>int</keyword>
+  <identifier>ALLOC_LENGTH</identifier>
+  <symbol>;</symbol>
+</classVarDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <keyword>void</keyword>
+  <identifier>init</identifier>
+  <symbol>(</symbol>
+<parameterList>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>heapBase</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <integerConstant>2048</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>heapBottom</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <integerConstant>16384</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>memory</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <integerConstant>0</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>freeList</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>heapBase</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>LENGTH</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <integerConstant>0</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>NEXT</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>freeList</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>heapBottom</identifier>
+</term>
+  <symbol>-</symbol>
+<term>
+  <identifier>heapBase</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>freeList</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>ALLOC_LENGTH</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <symbol>-</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<returnStatement>
+  <keyword>return</keyword>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <keyword>int</keyword>
+  <identifier>peek</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>address</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<statements>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <identifier>memory</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>address</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <keyword>void</keyword>
+  <identifier>poke</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>address</identifier>
+  <symbol>,</symbol>
+  <keyword>int</keyword>
+  <identifier>value</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>memory</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>address</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>value</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<returnStatement>
+  <keyword>return</keyword>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <identifier>Array</identifier>
+  <identifier>bestFit</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>size</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<varDec>
+  <keyword>var</keyword>
+  <identifier>Array</identifier>
+  <identifier>curBlock</identifier>
+  <symbol>,</symbol>
+  <identifier>bestBlock</identifier>
+  <symbol>;</symbol>
+</varDec>
+<varDec>
+  <keyword>var</keyword>
+  <keyword>int</keyword>
+  <identifier>bestSize</identifier>
+  <symbol>,</symbol>
+  <identifier>curSize</identifier>
+  <symbol>;</symbol>
+</varDec>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>bestBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>bestSize</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>heapBottom</identifier>
+</term>
+  <symbol>-</symbol>
+<term>
+  <identifier>heapBase</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>curBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>freeList</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>=</symbol>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<whileStatement>
+  <keyword>while</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>~</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+</term>
+  <symbol>=</symbol>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>curSize</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>-</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>~</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>curSize</identifier>
+</term>
+  <symbol>&lt;</symbol>
+<term>
+  <identifier>size</identifier>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</term>
+  <symbol>&amp;</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>curSize</identifier>
+</term>
+  <symbol>&lt;</symbol>
+<term>
+  <identifier>bestSize</identifier>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>bestBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>bestSize</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>curSize</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>curBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>curBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</whileStatement>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <identifier>bestBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <keyword>int</keyword>
+  <identifier>alloc</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>size</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<varDec>
+  <keyword>var</keyword>
+  <identifier>Array</identifier>
+  <identifier>foundBlock</identifier>
+  <symbol>,</symbol>
+  <identifier>nextBlock</identifier>
+  <symbol>,</symbol>
+  <identifier>result</identifier>
+  <symbol>;</symbol>
+</varDec>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>foundBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>Memory</identifier>
+  <symbol>.</symbol>
+  <identifier>bestFit</identifier>
+  <symbol>(</symbol>
+<expressionList>
+<expression>
+<term>
+  <identifier>size</identifier>
+</term>
+</expression>
+</expressionList>
+  <symbol>)</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>result</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>~</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+</term>
+  <symbol>=</symbol>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>&gt;</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>size</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <integerConstant>3</integerConstant>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>nextBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <identifier>size</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>nextBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>nextBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>-</symbol>
+<term>
+  <identifier>size</identifier>
+</term>
+  <symbol>-</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>result</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>ALLOC_LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>size</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>freeList</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>nextBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+  <keyword>else</keyword>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>nextBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>result</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>ALLOC_LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>foundBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>foundBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>nextBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <identifier>result</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <keyword>void</keyword>
+  <identifier>deAlloc</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>object</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<varDec>
+  <keyword>var</keyword>
+  <identifier>Array</identifier>
+  <identifier>preBlock</identifier>
+  <symbol>,</symbol>
+  <identifier>nextBlock</identifier>
+  <symbol>;</symbol>
+</varDec>
+<varDec>
+  <keyword>var</keyword>
+  <keyword>int</keyword>
+  <identifier>size</identifier>
+  <symbol>;</symbol>
+</varDec>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>size</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>ALLOC_LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+</term>
+  <symbol>-</symbol>
+<term>
+  <integerConstant>1</integerConstant>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>preBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>Memory</identifier>
+  <symbol>.</symbol>
+  <identifier>findPreFree</identifier>
+  <symbol>(</symbol>
+<expressionList>
+<expression>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+</expressionList>
+  <symbol>)</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+</term>
+  <symbol>=</symbol>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>size</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>freeList</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>freeList</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+  <keyword>else</keyword>
+  <symbol>{</symbol>
+<statements>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+  <symbol>=</symbol>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>+</symbol>
+<term>
+  <identifier>size</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+  <keyword>else</keyword>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>size</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+</term>
+  <symbol>+</symbol>
+<term>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+  <symbol>=</symbol>
+<term>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>nextBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>+</symbol>
+<term>
+  <identifier>nextBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>LENGTH</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>object</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>nextBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<returnStatement>
+  <keyword>return</keyword>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+<subroutineDec>
+  <keyword>function</keyword>
+  <identifier>Array</identifier>
+  <identifier>findPreFree</identifier>
+  <symbol>(</symbol>
+<parameterList>
+  <keyword>int</keyword>
+  <identifier>object</identifier>
+</parameterList>
+  <symbol>)</symbol>
+<subroutineBody>
+  <symbol>{</symbol>
+<varDec>
+  <keyword>var</keyword>
+  <identifier>Array</identifier>
+  <identifier>preBlock</identifier>
+  <symbol>;</symbol>
+</varDec>
+<statements>
+<ifStatement>
+  <keyword>if</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>freeList</identifier>
+</term>
+  <symbol>&gt;</symbol>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</ifStatement>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>preBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>freeList</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+<whileStatement>
+  <keyword>while</keyword>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <symbol>~</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>=</symbol>
+<term>
+  <keyword>null</keyword>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</term>
+  <symbol>&amp;</symbol>
+<term>
+  <symbol>(</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+  <symbol>&lt;</symbol>
+<term>
+  <identifier>object</identifier>
+</term>
+</expression>
+  <symbol>)</symbol>
+</term>
+</expression>
+  <symbol>)</symbol>
+  <symbol>{</symbol>
+<statements>
+<letStatement>
+  <keyword>let</keyword>
+  <identifier>preBlock</identifier>
+  <symbol>=</symbol>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+  <symbol>[</symbol>
+<expression>
+<term>
+  <identifier>NEXT</identifier>
+</term>
+</expression>
+  <symbol>]</symbol>
+</term>
+</expression>
+  <symbol>;</symbol>
+</letStatement>
+</statements>
+  <symbol>}</symbol>
+</whileStatement>
+<returnStatement>
+  <keyword>return</keyword>
+<expression>
+<term>
+  <identifier>preBlock</identifier>
+</term>
+</expression>
+  <symbol>;</symbol>
+</returnStatement>
+</statements>
+  <symbol>}</symbol>
+</subroutineBody>
+</subroutineDec>
+  <symbol>}</symbol>
+</class>
